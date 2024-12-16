@@ -16,6 +16,7 @@ public class Player_Controller : MonoBehaviour
     public float MoveSpeed = 5f;
 
     private Animator m_animator;
+    public bool mining;
 
     private void Awake()
     {
@@ -48,7 +49,7 @@ public class Player_Controller : MonoBehaviour
         }
         m_animator.SetBool("moving", IsMoving);
     }
-   
+    
     
     private void Update()
     {
@@ -114,6 +115,10 @@ public class Player_Controller : MonoBehaviour
                     else if (cellData.ContainedObject.PlayerWantToEnter())
                     {
                         MoveTo(newCellTarget,false);
+                        if (mining == true)
+                        {
+                            m_animator.SetTrigger("mining");
+                        }
                     }
                 }
             }

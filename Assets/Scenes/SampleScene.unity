@@ -833,6 +833,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsMoving: 0
   MoveSpeed: 5
+  mining: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

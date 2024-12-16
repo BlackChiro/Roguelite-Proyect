@@ -19,6 +19,7 @@ public class Wall_Object : Cell_Object
     public override bool PlayerWantToEnter()
     {
         m_HPWall--;
+        Game_Manager.Instance.player_controller.mining = true;
         if (m_HPWall > 0)
         {
             return false;
