@@ -23,8 +23,10 @@ public class Game_Manager : MonoBehaviour
 
     public bool GameOver = false;
     
-    public int m_comida = 100;
+    public int m_comida = 60;
     public int HealNumber;
+
+    public int currentLevel;
 
     private void Awake()
     {
@@ -39,8 +41,7 @@ public class Game_Manager : MonoBehaviour
     void Start()
     {
         m_Food_Label = UIDoc.rootVisualElement.Q<Label>("FoodLabel");
-        m_Food_Label.text = "Comida: " + m_comida;
-
+        
         turn_manager = new Turn_Manager();
         turn_manager.onTick += TurnoPasado;
 
@@ -59,7 +60,15 @@ public class Game_Manager : MonoBehaviour
 
     public void ChangeFood(int amount) 
     {
-        m_comida = m_comida + amount;
+        if (m_comida + amount > 100)
+        {
+            m_comida = 100;
+        }
+        else
+        {
+            m_comida = m_comida + amount;
+        }
+        
         m_Food_Label.text = "Comida: " + m_comida;
 
 
@@ -70,19 +79,27 @@ public class Game_Manager : MonoBehaviour
             m_GameOverLabel.text = "Game Over!! \n\nHas avanzado a traves de " + /*currentLevel + */ " niveles";
         }
 
-        if (m_comida >= 100)
-        {
-            m_comida = 100;
-        }
+
     }
 
-    void Restart()
+    public void NewLevel() 
     {
-        if (GameOver == true)
-        {
-            
-        }
+        board_manager.Clean();
+        board_manager.MapGeneration();
+        player_controller.Spawn(board_manager, new Vector2Int(1,1));
+
+        currentLevel ++;
     }
 
-
+    public void StartNewGame() 
+    {
+        m_GameOverPanel.style.visibility = Visibility.Hidden;
+        currentLevel = 1;
+        m_comida = 60;
+        board_manager.Clean();
+        board_manager.MapGeneration();
+        player_controller.init();
+        player_controller.Spawn(board_manager,new Vector2Int(1,1));
+        m_Food_Label.text = "Comida: " + m_comida;
+    }
 }

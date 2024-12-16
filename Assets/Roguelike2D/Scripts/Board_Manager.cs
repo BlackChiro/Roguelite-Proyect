@@ -30,11 +30,14 @@ public Food_Object_Gr FoodGrPrefab;
 
 public Wall_Object WallPrefab;
 
-    private List<Vector2Int> m_emptyCells;
+public Exit_Object ExitCellPrefab;
+
+private List<Vector2Int> m_emptyCells;
 
 public Player_Controller PController;
 public int SpawnY;
 public int SpawnX;
+
     public void MapGeneration()
     {
         m_Grid = GetComponentInChildren<Grid>();
@@ -69,6 +72,9 @@ public int SpawnX;
             }
         }
         m_emptyCells.Remove(new Vector2Int(1, 1));
+        Vector2Int endCoord = new Vector2Int(Height - 2, Width - 2);
+        AddObject(Instantiate(ExitCellPrefab), endCoord);
+        m_emptyCells.Remove(endCoord);
         GenerateWall();
         SpawnComida();
     }
@@ -78,7 +84,6 @@ public int SpawnX;
     {
         return m_Grid.GetCellCenterWorld((Vector3Int)cellIndex);
     }
-    
     public CellData GetCelldata (Vector2Int cellIndex)
     {
         if (cellIndex.x < 0 || cellIndex.x >= Width || cellIndex.y < 0 || cellIndex.y >= Height) 
@@ -132,5 +137,26 @@ public int SpawnX;
     public Tile GetCellTile(Vector2Int cellIndex) 
     {
         return m_Tilemap.GetTile<Tile>(new Vector3Int(cellIndex.x,cellIndex.y, 0));    
+    }
+    public void Clean()
+    {
+        if(m_BoardData == null) 
+        
+            return;
+
+        for(int y = 0; y < Height; y++)
+        {
+            for (int x = 0; x < Width; x++)
+            {
+                var cellData = m_BoardData[x, y];
+                if (cellData.ContainedObject != null)
+                {
+                    Destroy(cellData.ContainedObject.gameObject);
+                }
+
+                SetCellTile(new Vector2Int (x, y), null);
+            }
+        }
+
     }
 }
