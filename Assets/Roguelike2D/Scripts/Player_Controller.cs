@@ -76,9 +76,13 @@ public class Player_Controller : MonoBehaviour
             return;
         }
 
+
         if (Game_Manager.Instance.GameOver == false)
         {
-
+            if (Keyboard.current.spaceKey.wasPressedThisFrame)
+            {
+                Game_Manager.Instance.turn_manager.Tick();
+            }
             if (Keyboard.current.upArrowKey.wasPressedThisFrame)
             {
                 newCellTarget.y += 1;
