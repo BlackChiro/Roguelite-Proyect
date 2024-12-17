@@ -199,6 +199,7 @@ MonoBehaviour:
   FoodGrPrefab: {fileID: 2534128915850436707, guid: b510ec5ad3b76564799b0c1ebc737a59, type: 3}
   WallPrefab: {fileID: 750009236063569025, guid: 62e0b21532ef8494b867c5a41e688fe7, type: 3}
   ExitCellPrefab: {fileID: 3112721211703364273, guid: 10278e0dd3b89664bb860160c0519dc3, type: 3}
+  EnemyPrefab: {fileID: 2363713327461263929, guid: 856418c341241d849994531b12267c36, type: 3}
   PController: {fileID: 1657417482}
   SpawnY: 1
   SpawnX: 1
@@ -831,9 +832,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f581283b81d5afb4e88dc8bfb3dfee3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CellPosition: {x: 0, y: 0}
   IsMoving: 0
   MoveSpeed: 5
-  mining: 0
+  animator: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -23,7 +23,7 @@ public class Game_Manager : MonoBehaviour
 
     public bool GameOver = false;
     
-    public int m_comida = 60;
+    public int m_comida = 100;
     public int HealNumber;
 
     public int currentLevel;
@@ -76,7 +76,7 @@ public class Game_Manager : MonoBehaviour
         {
             GameOver = true;
             m_GameOverPanel.style.visibility = Visibility.Visible;
-            m_GameOverLabel.text = "Game Over!! \n\nHas avanzado a traves de " + /*currentLevel + */ " niveles";
+            m_GameOverLabel.text = "Game Over!! \n\nHas avanzado a traves de " + currentLevel +  " niveles";
         }
 
 
@@ -95,7 +95,7 @@ public class Game_Manager : MonoBehaviour
     {
         m_GameOverPanel.style.visibility = Visibility.Hidden;
         currentLevel = 1;
-        m_comida = 60;
+        m_comida = 100;
         board_manager.Clean();
         board_manager.MapGeneration();
         player_controller.init();

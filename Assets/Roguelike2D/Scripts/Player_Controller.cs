@@ -9,18 +9,18 @@ public class Player_Controller : MonoBehaviour
 
 {
     private Board_Manager m_Board_Manager;
-    private Vector2Int m_CellPosition;
+    public Vector2Int CellPosition;
     private Grid m_grid;
     public bool IsMoving = false;
     private Vector3 m_MoveTarget;
     public float MoveSpeed = 5f;
 
-    private Animator m_animator;
-    public bool mining;
+    public Animator animator;
+    
 
     private void Awake()
     {
-        m_animator = GetComponent<Animator>();  
+        animator = GetComponent<Animator>();  
     }
     public void init()
     {
@@ -36,24 +36,24 @@ public class Player_Controller : MonoBehaviour
 
     public void MoveTo (Vector2Int cell,bool inmediate)
     {
-        m_CellPosition = cell;
+        CellPosition = cell;
         if (inmediate)
         {
             IsMoving = false;
-            transform.position = m_Board_Manager.CellToWorld(m_CellPosition);
+            transform.position = m_Board_Manager.CellToWorld(CellPosition);
         }
         else
         {
             IsMoving = true;
-            m_MoveTarget = m_Board_Manager.CellToWorld(m_CellPosition);
+            m_MoveTarget = m_Board_Manager.CellToWorld(CellPosition);
         }
-        m_animator.SetBool("moving", IsMoving);
+        animator.SetBool("moving", IsMoving);
     }
     
     
     private void Update()
     {
-        Vector2Int newCellTarget = m_CellPosition;
+        Vector2Int newCellTarget = CellPosition;
         bool hasMoved = false;
         if (Game_Manager.Instance.GameOver == true)
         {
@@ -69,8 +69,8 @@ public class Player_Controller : MonoBehaviour
             if (transform.position == m_MoveTarget) 
             {
                 IsMoving = false;
-                m_animator.SetBool("Moving",false);
-                var cellData = m_Board_Manager.GetCelldata(m_CellPosition);
+                animator.SetBool("moving",false);
+                var cellData = m_Board_Manager.GetCelldata(CellPosition);
                 if (cellData.ContainedObject != null) cellData.ContainedObject.PlayerEntered();
             }
             return;
@@ -115,10 +115,8 @@ public class Player_Controller : MonoBehaviour
                     else if (cellData.ContainedObject.PlayerWantToEnter())
                     {
                         MoveTo(newCellTarget,false);
-                        if (mining == true)
-                        {
-                            m_animator.SetTrigger("mining");
-                        }
+
+
                     }
                 }
             }

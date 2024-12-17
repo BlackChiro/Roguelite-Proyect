@@ -32,6 +32,8 @@ public Wall_Object WallPrefab;
 
 public Exit_Object ExitCellPrefab;
 
+public Enemy_Object EnemyPrefab;
+
 private List<Vector2Int> m_emptyCells;
 
 public Player_Controller PController;
@@ -76,6 +78,7 @@ public int SpawnX;
         AddObject(Instantiate(ExitCellPrefab), endCoord);
         m_emptyCells.Remove(endCoord);
         GenerateWall();
+        GenerateEnemies();
         SpawnComida();
     }
 
@@ -106,6 +109,20 @@ public int SpawnX;
             AddObject(newFood,coord);
         }     
     }
+    public void SpawnComidaGR()
+    {
+        int foodCountGR = Random.Range(2, 3);
+
+        for (int i = 0; i < foodCountGR; i++)
+        {
+            int randomIndex = Random.Range(0, m_emptyCells.Count);
+            Vector2Int coord = m_emptyCells[randomIndex];
+
+            m_emptyCells.RemoveAt(randomIndex);
+            Food_Object_Gr newFoodGR = Instantiate(FoodGrPrefab);
+            AddObject(newFoodGR, coord);
+        }
+    }
     void GenerateWall()
     {
         int wallCount = Random.Range(4, 8);
@@ -120,7 +137,20 @@ public int SpawnX;
             AddObject(newWall, coord);
         }
     } 
+    void GenerateEnemies()
+    {
+        int enemiesCount = Random.Range(3,6);
 
+        for(int i = 0; i< enemiesCount; i++)
+        {
+            int randomIndex = Random.Range(0, m_emptyCells.Count);
+            Vector2Int coord = m_emptyCells[randomIndex];
+
+            m_emptyCells.RemoveAt(randomIndex);
+            Enemy_Object newEnemy = Instantiate(EnemyPrefab);
+            AddObject(newEnemy, coord);
+        }
+    }
     void AddObject (Cell_Object obj,Vector2Int coord)
     {
         CellData data = m_BoardData[coord.x, coord.y];
